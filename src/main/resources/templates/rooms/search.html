@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Search Rooms - Venkat Residency</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+        <div class="container">
+            <a class="navbar-brand" href="/"><i class="fas fa-building"></i> Venkat Residency</a>
+            <div class="navbar-nav ms-auto">
+                <a class="nav-link" href="/">Home</a>
+                <a class="nav-link active" href="/rooms/search">Search</a>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container mt-4">
+        <h2>Search Available Rooms</h2>
+        <div class="card mb-4">
+            <div class="card-body">
+                <form method="get" action="/rooms/search">
+                    <div class="row">
+                        <div class="col-md-3">
+                            <label>Check-in Date</label>
+                            <input type="date" name="checkIn" class="form-control" th:value="${checkIn}" required>
+                        </div>
+                        <div class="col-md-3">
+                            <label>Check-out Date</label>
+                            <input type="date" name="checkOut" class="form-control" th:value="${checkOut}" required>
+                        </div>
+                        <div class="col-md-3">
+                            <label>Hostel Type</label>
+                            <select name="hostelType" class="form-control">
+                                <option value="">All Types</option>
+                                <option value="BACHELOR" th:selected="${selectedHostelType == 'BACHELOR'}">Bachelor</option>
+                                <option value="FAMILY" th:selected="${selectedHostelType == 'FAMILY'}">Family</option>
+                                <option value="MIXED" th:selected="${selectedHostelType == 'MIXED'}">Mixed</option>
+                            </select>
+                        </div>
+                        <div class="col-md-3">
+                            <label>&nbsp;</label>
+                            <button type="submit" class="btn btn-primary d-block w-100">Search</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <div th:if="${rooms != null and !rooms.isEmpty()}">
+            <h4>Available Rooms</h4>
+            <div class="row">
+                <div class="col-md-4" th:each="room : ${rooms}">
+                    <div class="card mb-4">
+                        <img src="https://images.unsplash.com/photo-1505693416388-ac5ce068fe85?ixlib=rb-4.0.3" 
+                             class="card-img-top" alt="Room" style="height: 200px; object-fit: cover;">
+                        <div class="card-body">
+                            <h5 th:text="${room.roomNumber} + ' - ' + ${room.roomType}"></h5>
+                            <p th:text="${room.description}"></p>
+                            <p class="text-success fw-bold" th:text="'₹' + ${room.pricePerNight} + '/night'"></p>
+                            <a th:href="@{/bookings/new(roomId=${room.id})}" class="btn btn-success">Book Now</a>
+                            <a th:href="@{/rooms/{id}(id=${room.id})}" class="btn btn-outline-primary">Details</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div th:if="${rooms == null or rooms.isEmpty()}" class="alert alert-info">
+            No rooms available for the selected dates. Please try different dates.
+        </div>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
+
+
+
+

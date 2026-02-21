@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments/header :: head">
+</head>
+<body>
+    <div th:replace="fragments/header :: nav"></div>
+
+    <div class="container mt-4">
+        <h2>Book Room: <span th:text="${room.roomNumber}"></span></h2>
+        
+        <div class="row">
+            <div class="col-md-8">
+                <form th:action="@{/bookings}" th:object="${bookingRequest}" method="post">
+                    <input type="hidden" th:field="*{roomId}">
+                    
+                    <div class="mb-3">
+                        <label class="form-label">Full Name</label>
+                        <input type="text" class="form-control" th:field="*{guestName}" required>
+                    </div>
+                    
+                    <div class="mb-3">
+                        <label class="form-label">Email</label>
+                        <input type="email" class="form-control" th:field="*{guestEmail}" required>
+                    </div>
+                    
+                    <div class="mb-3">
+                        <label class="form-label">Phone</label>
+                        <input type="tel" class="form-control" th:field="*{guestPhone}" required>
+                    </div>
+                    
+                    <div class="row">
+                        <div class="col-md-6">
+                            <label class="form-label">Check-in Date</label>
+                            <input type="date" class="form-control" th:field="*{checkInDate}" required>
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label">Check-out Date</label>
+                            <input type="date" class="form-control" th:field="*{checkOutDate}" required>
+                        </div>
+                    </div>
+                    
+                    <button type="submit" class="btn btn-primary mt-3">Continue to Payment</button>
+                </form>
+            </div>
+            
+            <div class="col-md-4">
+                <div class="card">
+                    <div class="card-body">
+                        <h5>Room Details</h5>
+                        <p><strong>Room:</strong> <span th:text="${room.roomNumber}"></span></p>
+                        <p><strong>Type:</strong> <span th:text="${room.roomType}"></span></p>
+                        <p><strong>Price:</strong> ₹<span th:text="${room.pricePerNight}"></span>/night</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div th:replace="fragments/footer :: footer"></div>
+</body>
+</html>

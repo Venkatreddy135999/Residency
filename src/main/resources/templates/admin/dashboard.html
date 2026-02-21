@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments/header :: head">
+    <title>Admin Dashboard</title>
+</head>
+<body>
+    <div th:replace="fragments/header :: nav"></div>
+
+    <div class="container mt-4">
+        <h2>Admin Dashboard</h2>
+        
+        <div class="row">
+            <div class="col-md-3">
+                <div class="card text-white bg-primary">
+                    <div class="card-body">
+                        <h4 th:text="${totalRooms}">0</h4>
+                        <p>Total Rooms</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="card text-white bg-success">
+                    <div class="card-body">
+                        <h4 th:text="${availableRooms}">0</h4>
+                        <p>Available Rooms</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="card text-white bg-info">
+                    <div class="card-body">
+                        <h4 th:text="${totalBookings}">0</h4>
+                        <p>Total Bookings</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="card text-white bg-warning">
+                    <div class="card-body">
+                        <h4 th:text="${pendingBookings}">0</h4>
+                        <p>Pending Bookings</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="mt-4">
+            <a href="/admin/rooms" class="btn btn-secondary">Manage Rooms</a>
+            <a href="/admin/bookings" class="btn btn-secondary">Manage Bookings</a>
+        </div>
+    </div>
+
+    <div th:replace="fragments/footer :: footer"></div>
+</body>
+</html>
